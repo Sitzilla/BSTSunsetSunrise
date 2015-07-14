@@ -6,12 +6,16 @@
 #ifndef TREE_H
 #define TREE_H
 
+#include <string>
+using namespace std;
+
 struct Node
 {
-	Node(int key, int value, Node *left = NULL, Node *right = NULL)
-	: key(key), value(value), left(left), right(right) {}
+	Node(int time, string day, Node *left = NULL, Node *right = NULL)
+	: time(time), day(day), left(left), right(right) {}
 
-	int key, value;
+	int time;
+	string day;
 	Node *left, *right;
 };
 
@@ -22,9 +26,9 @@ class BinaryTree
 		BinaryTree(const BinaryTree &bt);
 		~BinaryTree();
 
-		void insert(int k, int v);
+		void insert(int k, string v);
 		void remove(int k);
-		bool search(int k, int &v) const;
+		bool search(int k, string &v) const;
 		int size() const;
 		int height() const;
 		void print() const;
@@ -32,9 +36,9 @@ class BinaryTree
 	private:
 		void copyNode(const Node *n);
 		void deleteNode(Node *&n);
-		void insert(int k, int v, Node *&n);
+		void insert(int k, string v, Node *&n);
 		void remove(int k, Node *&n);
-		bool search(int k, int &v, Node *n) const;
+		bool search(int k, string &v, Node *n) const;
 		int size(Node *n) const;
 		int height(Node *n) const;
 		void print(Node *n) const;

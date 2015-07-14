@@ -1,31 +1,28 @@
 #include <iostream>
 #include <fstream>
+#include <string>
+
+#include "tree.h"
+#include "day.h"
 using namespace std;
 
 void doit(istream &fin)
 {
-	// todo: set up binary tree here
+	BinaryTree sunriseTree;
+	BinaryTree sunsetTree;
 
-	int year, month, date, sunrise, sunset;
+	int year, month, day, sunrise, sunset;
 	while(true)
 	{
-		fin >> year >> month >> date >> sunrise >> sunset;
+		fin >> year >> month >> day >> sunrise >> sunset;
 		if(fin.eof())
 		{
 			break;
 		}
+		Day tempDate(year, month, day, sunrise, sunset);
 
-		// todo: insert dates into binary tree here
-
-		// uncomment the code below to verify
-		// that you are loading the file correctly
-		/*
-		cout << year << "-"
-		     << month << "-"
-		     << date << " "
-		     << sunrise << " "
-		     << sunset << endl;
-		*/
+		sunriseTree.insert(sunrise, tempDate.getDate());
+		sunriseTree.insert(sunset, tempDate.getDate());
 	}
 
 	// todo: use the binary tree here

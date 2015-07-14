@@ -17,7 +17,7 @@ BinaryTree::~BinaryTree()
 	deleteNode(root);
 }
 
-void BinaryTree::insert(int k, int v)
+void BinaryTree::insert(int k, string v)
 {
 	insert(k, v, root);
 }
@@ -27,7 +27,7 @@ void BinaryTree::remove(int k)
 	remove(k, root);
 }
 
-bool BinaryTree::search(int k, int &v) const
+bool BinaryTree::search(int k, string &v) const
 {
 	return search(k, v, root);
 }
@@ -53,7 +53,7 @@ void BinaryTree::copyNode(const Node *n)
 {
 	if(n != NULL)
 	{
-		insert(n->key, n->value);
+		insert(n->time, n->day);
 		copyNode(n->left);
 		copyNode(n->right);
 	}
@@ -70,23 +70,23 @@ void BinaryTree::deleteNode(Node *&n)
 	}
 }
 
-void BinaryTree::insert(int k, int v, Node *&n)
+void BinaryTree::insert(int k, string v, Node *&n)
 {
 	if(n == NULL)
 	{
 		n = new Node(k, v);
 	}
-	else if(k < n->key)
+	else if(k < n->time)
 	{
 		insert(k, v, n->left);
 	}
-	else if(k > n->key)
+	else if(k > n->time)
 	{
 		insert(k, v, n->right);
 	}
 	else
 	{
-		n->value = v;
+		n->day = v;
 	}
 }
 
@@ -94,11 +94,11 @@ void BinaryTree::remove(int k, Node *&n)
 {
 	if(n != NULL)
 	{
-		if(k < n->key)
+		if(k < n->time)
 		{
 			remove(k, n->left);
 		}
-		else if(k > n->key)
+		else if(k > n->time)
 		{
 			remove(k, n->right);
 		}
@@ -109,9 +109,9 @@ void BinaryTree::remove(int k, Node *&n)
 			{
 				successor = successor->left;
 			}
-			n->key = successor->key;
-			n->value = successor->value;
-			remove(successor->key, successor);
+			n->time = successor->time;
+			n->day = successor->day;
+			remove(successor->time, successor);
 		}
 		else if(n->left != NULL)
 		{
@@ -133,23 +133,23 @@ void BinaryTree::remove(int k, Node *&n)
 	}
 }
 
-bool BinaryTree::search(int k, int &v, Node *n) const
+bool BinaryTree::search(int k, string &v, Node *n) const
 {
 	if(n == NULL)
 	{
 		return false;
 	}
-	else if(k < n->key)
+	else if(k < n->time)
 	{
 		return search(k, v, n->left);
 	}
-	else if(k > n->key)
+	else if(k > n->time)
 	{
 		return search(k, v, n->right);
 	}
 	else
 	{
-		v = n->value;
+		v = n->day;
 		return true;
 	}
 }
@@ -184,23 +184,8 @@ void BinaryTree::print(Node *n) const
 	{
 		cout << "(";
 		print(n->left);
-		cout << n->key << ":" << n->value;
+		cout << n->time << ":" << n->day;
 		print(n->right);
 		cout << ")";
 	}
-}
-
-int main()
-{
-	BinaryTree bt;
-	bt.insert(5, 5);
-	bt.insert(1, 1);
-	bt.insert(2, 2);
-	bt.insert(3, 3);
-	bt.insert(6, 6);
-	bt.insert(7, 7);
-	bt.insert(8, 8);
-	bt.print();
-	cout << endl;
-	return 0;
 }
