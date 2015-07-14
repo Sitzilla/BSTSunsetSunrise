@@ -23,15 +23,15 @@ struct Node
 class BinaryTree
 {
 	public:
-		BinaryTree() : root(NULL) {}
+		BinaryTree();
 		BinaryTree(const BinaryTree &bt);
 		~BinaryTree();
 
 		void insert(int k, Day v);
-		void print() const;
-		void printBefore(int k) const;
-		void printAfter(int k) const;
-		void printBetween(int after, int until) const;
+		void print();
+		void printBefore(int k);
+		void printAfter(int k);
+		void printBetween(int after, int until);
 
 
 
@@ -39,11 +39,12 @@ class BinaryTree
 		void copyNode(const Node *n);
 		void deleteNode(Node *&n);
 		void insert(int k, Day v, Node *&n);
-		void print(Node *n) const;
-		void printBefore(Node *n, int k) const;
-		void printAfter(Node *n, int k) const;
-		void printBetween(Node *n, int after, int until) const;
+		void print(Node *n);
+		void printBefore(Node *n, int k);
+		void printAfter(Node *n, int k);
+		void printBetween(Node *n, int after, int until);
 
+		int dayCount;
 		Node *root;
 };
 

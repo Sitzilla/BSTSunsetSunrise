@@ -8,8 +8,13 @@
 #include "day.h"
 using namespace std;
 
+BinaryTree::BinaryTree() : root(NULL) {
+	dayCount = 0;
+}
+
 BinaryTree::BinaryTree(const BinaryTree &bt)
 {
+	dayCount = 0;
 	copyNode(bt.root);
 }
 
@@ -23,24 +28,32 @@ void BinaryTree::insert(int k, Day v)
 	insert(k, v, root);
 }
 
-void BinaryTree::print() const
+void BinaryTree::print()
 {
+	dayCount = 0;
 	print(root);
+	cout << "Total Number of Days in Timerange: " << dayCount << endl;
 }
 
-void BinaryTree::printBefore(int k) const
+void BinaryTree::printBefore(int k)
 {
+	dayCount = 0;
 	printBefore(root, k);
+	cout << "Total Number of Days in Timerange: " << dayCount << endl;
 }
 
-void BinaryTree::printAfter(int k) const
+void BinaryTree::printAfter(int k)
 {
+	dayCount = 0;
 	printAfter(root, k);
+	cout << "Total Number of Days in Timerange: " << dayCount << endl;
 }
 
-void BinaryTree::printBetween(int after, int until) const
+void BinaryTree::printBetween(int after, int until)
 {
+	dayCount = 0;
 	printBetween(root, after, until);
+	cout << "Total Number of Days in Timerange: " << dayCount << endl;
 }
 
 // MARK: Private methods
@@ -86,46 +99,50 @@ void BinaryTree::insert(int k, Day v, Node *&n)
 	}
 }
 
-void BinaryTree::print(Node *n) const
+void BinaryTree::print(Node *n)
 {
 	if(n != NULL)
 	{
 		print(n->left);
+		dayCount += 1;
 		n->day.print();
 		print(n->right);
 	}
 }
 
-void BinaryTree::printBefore(Node *n, int k) const
+void BinaryTree::printBefore(Node *n, int k)
 {
 	if(n != NULL)
 	{
 		printBefore(n->left, k);
 		if(n->time < k) {
+			dayCount += 1;
 			n->day.print();
 		}
 		printBefore(n->right, k);
 	}
 }
 
-void BinaryTree::printAfter(Node *n, int k) const
+void BinaryTree::printAfter(Node *n, int k)
 {
 	if(n != NULL)
 	{
 		printAfter(n->left, k);
 		if(n->time > k) {
+			dayCount += 1;
 			n->day.print();
 		}
 		printAfter(n->right, k);
 	}
 }
 
-void BinaryTree::printBetween(Node *n, int after, int until) const
+void BinaryTree::printBetween(Node *n, int after, int until)
 {
 	if(n != NULL)
 	{
 		printBetween(n->left, after, until);
 		if((n->time >= after) && (n->time <= until)) {
+			dayCount += 1;
 			n->day.print();
 		}
 		printBetween(n->right, after, until);
