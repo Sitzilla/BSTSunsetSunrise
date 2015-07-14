@@ -3,6 +3,7 @@
 #include "day.h"
 using namespace std;
 
+Day::Day() {};
 Day::Day(int year, int month, int day, int pSunrise, int pSunset) {
     date = to_string(year) + "-" + to_string(month) + "-" + to_string(day);
     sunrise = pSunrise;
@@ -16,5 +17,5 @@ string Day::getDate() {
 void Day::print() {
     cout << "Day " << date << endl;
     cout << "Sunrise " << sunrise << endl;
-    cout << "Sunset " << sunset << endl;
+    cout << "Sunset " << sunset << endl << endl;
 }

@@ -7,15 +7,16 @@
 #define TREE_H
 
 #include <string>
+#include "day.h"
 using namespace std;
 
 struct Node
 {
-	Node(int time, string day, Node *left = NULL, Node *right = NULL)
+	Node(int time, Day day, Node *left = NULL, Node *right = NULL)
 	: time(time), day(day), left(left), right(right) {}
 
 	int time;
-	string day;
+	Day day;
 	Node *left, *right;
 };
 
@@ -26,22 +27,22 @@ class BinaryTree
 		BinaryTree(const BinaryTree &bt);
 		~BinaryTree();
 
-		void insert(int k, string v);
-		void remove(int k);
-		bool search(int k, string &v) const;
-		int size() const;
-		int height() const;
+		void insert(int k, Day v);
 		void print() const;
+		void printBefore(int k) const;
+		void printAfter(int k) const;
+		void printBetween(int after, int until) const;
+
+
 
 	private:
 		void copyNode(const Node *n);
 		void deleteNode(Node *&n);
-		void insert(int k, string v, Node *&n);
-		void remove(int k, Node *&n);
-		bool search(int k, string &v, Node *n) const;
-		int size(Node *n) const;
-		int height(Node *n) const;
+		void insert(int k, Day v, Node *&n);
 		void print(Node *n) const;
+		void printBefore(Node *n, int k) const;
+		void printAfter(Node *n, int k) const;
+		void printBetween(Node *n, int after, int until) const;
 
 		Node *root;
 };

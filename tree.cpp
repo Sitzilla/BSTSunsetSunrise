@@ -5,6 +5,7 @@
 
 #include <iostream>
 #include "tree.h"
+#include "day.h"
 using namespace std;
 
 BinaryTree::BinaryTree(const BinaryTree &bt)
@@ -17,34 +18,29 @@ BinaryTree::~BinaryTree()
 	deleteNode(root);
 }
 
-void BinaryTree::insert(int k, string v)
+void BinaryTree::insert(int k, Day v)
 {
 	insert(k, v, root);
-}
-
-void BinaryTree::remove(int k)
-{
-	remove(k, root);
-}
-
-bool BinaryTree::search(int k, string &v) const
-{
-	return search(k, v, root);
-}
-
-int BinaryTree::size() const
-{
-	return size(root);
-}
-
-int BinaryTree::height() const
-{
-	return height(root);
 }
 
 void BinaryTree::print() const
 {
 	print(root);
+}
+
+void BinaryTree::printBefore(int k) const
+{
+	printBefore(root, k);
+}
+
+void BinaryTree::printAfter(int k) const
+{
+	printAfter(root, k);
+}
+
+void BinaryTree::printBetween(int after, int until) const
+{
+	printBetween(root, after, until);
 }
 
 // MARK: Private methods
@@ -70,13 +66,13 @@ void BinaryTree::deleteNode(Node *&n)
 	}
 }
 
-void BinaryTree::insert(int k, string v, Node *&n)
+void BinaryTree::insert(int k, Day v, Node *&n)
 {
 	if(n == NULL)
 	{
 		n = new Node(k, v);
 	}
-	else if(k < n->time)
+	else if(k <= n->time)
 	{
 		insert(k, v, n->left);
 	}
@@ -90,102 +86,48 @@ void BinaryTree::insert(int k, string v, Node *&n)
 	}
 }
 
-void BinaryTree::remove(int k, Node *&n)
-{
-	if(n != NULL)
-	{
-		if(k < n->time)
-		{
-			remove(k, n->left);
-		}
-		else if(k > n->time)
-		{
-			remove(k, n->right);
-		}
-		else if(n->left != NULL && n->right != NULL)
-		{
-			Node *successor = n->right;
-			while(successor->left != NULL)
-			{
-				successor = successor->left;
-			}
-			n->time = successor->time;
-			n->day = successor->day;
-			remove(successor->time, successor);
-		}
-		else if(n->left != NULL)
-		{
-			Node *left = n->left;
-			delete n;
-			n = left;
-		}
-		else if(n->right != NULL)
-		{
-			Node *right = n->right;
-			delete n;
-			n = right;
-		}
-		else
-		{
-			delete n;
-			n = NULL;
-		}
-	}
-}
-
-bool BinaryTree::search(int k, string &v, Node *n) const
-{
-	if(n == NULL)
-	{
-		return false;
-	}
-	else if(k < n->time)
-	{
-		return search(k, v, n->left);
-	}
-	else if(k > n->time)
-	{
-		return search(k, v, n->right);
-	}
-	else
-	{
-		v = n->day;
-		return true;
-	}
-}
-
-int BinaryTree::size(Node *n) const
-{
-	if(n == NULL)
-	{
-		return 0;
-	}
-	else
-	{
-		return size(n->left) + size(n->right) + 1;
-	}
-}
-
-int BinaryTree::height(Node *n) const
-{
-	if(n == NULL)
-	{
-		return 0;
-	}
-	else
-	{
-		return max(height(n->left), height(n->right)) + 1;
-	}
-}
-
 void BinaryTree::print(Node *n) const
 {
 	if(n != NULL)
 	{
-		cout << "(";
 		print(n->left);
-		cout << n->time << ":" << n->day;
+		n->day.print();
 		print(n->right);
-		cout << ")";
+	}
+}
+
+void BinaryTree::printBefore(Node *n, int k) const
+{
+	if(n != NULL)
+	{
+		printBefore(n->left, k);
+		if(n->time < k) {
+			n->day.print();
+		}
+		printBefore(n->right, k);
+	}
+}
+
+void BinaryTree::printAfter(Node *n, int k) const
+{
+	if(n != NULL)
+	{
+		printAfter(n->left, k);
+		if(n->time > k) {
+			n->day.print();
+		}
+		printAfter(n->right, k);
+	}
+}
+
+void BinaryTree::printBetween(Node *n, int after, int until) const
+{
+	if(n != NULL)
+	{
+		printBetween(n->left, after, until);
+		if((n->time >= after) && (n->time <= until)) {
+			n->day.print();
+		}
+		printBetween(n->right, after, until);
 	}
 }
